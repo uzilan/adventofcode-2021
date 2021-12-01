@@ -1,19 +1,20 @@
 package adventofcode
 
+import java.io.File
+import java.lang.ClassLoader.getSystemResource
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
 object Utils {
 
-    fun String.toStringList(): List<String> {
-        return this.split("\n")
-            .filter { it.isNotBlank() }
-            .map { it.trim() }
+    fun readLines(fileName: String): List<String> {
+        return File(getSystemResource(fileName).file)
+            .readLines()
+            .map(String::trim)
     }
 
-    fun String.toLongList(): List<Long> {
-        return toStringList()
-            .map { it.toLong() }
+    fun readLinesAsInts(fileName: String): List<Int> {
+        return readLines(fileName).map { it.toInt() }
     }
 
     @ExperimentalTime
