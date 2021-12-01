@@ -6,11 +6,7 @@ import kotlin.time.ExperimentalTime
 
 object Day1 {
     fun part1(input: List<Int>): Int {
-        val (_, sum) = input.drop(1).fold(Pair(input.first(), 0)) { acc, curr ->
-            if (curr > acc.first) Pair(curr, acc.second + 1)
-            else Pair(curr, acc.second)
-        }
-        return sum
+        return input.zipWithNext().count { (a, b) -> b > a }
     }
 
     fun part2(input: List<Int>): Int {
