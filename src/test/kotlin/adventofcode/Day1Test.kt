@@ -1,6 +1,7 @@
 package adventofcode
 
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 class Day1Test : StringSpec({
     val input = listOf(
@@ -17,11 +18,10 @@ class Day1Test : StringSpec({
     )
 
     "Day 1 part 1" {
-        assert(Day1.part1(input) == 7)
+        Day1.part1(input) shouldBe 7
     }
 
     "Day 1 part 2" {
-        assert(Day1.part2(input) == 5)
+        Day1.part2(input) shouldBe 5
     }
-
 })
