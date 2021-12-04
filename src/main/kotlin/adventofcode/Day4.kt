@@ -14,8 +14,8 @@ object Day4 {
     }
 
     private tailrec fun part1Helper(numbers: List<Int>, boards: List<Board>): Int {
+        val currentNumber = numbers.first()
         boards.forEach { board ->
-            val currentNumber = numbers.first()
             board.mark(currentNumber)
             if (board.isBingo()) return board.unmarkedSum() * currentNumber
         }
@@ -23,8 +23,8 @@ object Day4 {
     }
 
     private tailrec fun part2Helper(numbers: List<Int>, boards: List<Board>): Int {
+        val currentNumber = numbers.first()
         boards.forEach { board ->
-            val currentNumber = numbers.first()
             board.mark(currentNumber)
             if (boards.all { it.isBingo() }) return board.unmarkedSum() * currentNumber
         }
