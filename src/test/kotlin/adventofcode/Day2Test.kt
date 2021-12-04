@@ -4,14 +4,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
 class Day2Test : StringSpec({
-    val input = listOf(
-        "forward 5",
-        "down 5",
-        "forward 8",
-        "up 3",
-        "down 8",
-        "forward 2",
-    )
+    val input = Utils.readLines("day2test.txt")
 
     "Day 2 part 1" {
         Day2.part1(input) shouldBe 150

@@ -7,6 +7,10 @@ import kotlin.time.measureTimedValue
 
 object Utils {
 
+    fun readText(fileName: String): String {
+        return File(getSystemResource(fileName).file).readText()
+    }
+
     fun readLines(fileName: String): List<String> {
         return File(getSystemResource(fileName).file)
             .readLines()
