@@ -41,11 +41,9 @@ object Day4 {
     data class Number(val number: Int, var marked: Boolean = false)
     data class Board(val lines: List<List<Number>>) {
         fun mark(number: Int) {
-            lines.forEach { line ->
-                line.forEach {
-                    if (it.number == number) {
-                        it.marked = true
-                    }
+            lines.flatten().forEach {
+                if (it.number == number) {
+                    it.marked = true
                 }
             }
         }
