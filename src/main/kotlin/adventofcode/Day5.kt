@@ -1,13 +1,18 @@
 package adventofcode
 
+import adventofcode.Utils.printResult
 import kotlin.time.ExperimentalTime
+
+typealias Ground = List<MutableList<Int>>
+typealias Coords = Pair<Int, Int>
+typealias Lines = List<List<Coords>>
 
 object Day5 {
 
     fun part1(input: List<String>, mapSize: Int = 1000): Int {
-        val (ground, map) = createGroundAndMap(input, mapSize)
+        val (ground, lines) = createGroundAndLines(input, mapSize)
 
-        map.forEach { line ->
+        lines.forEach { line ->
             val from = line.first()
             val to = line.last()
             when {
@@ -26,9 +31,9 @@ object Day5 {
     }
 
     fun part2(input: List<String>, mapSize: Int = 1000): Int {
-        val (ground, map) = createGroundAndMap(input, mapSize)
+        val (ground, lines) = createGroundAndLines(input, mapSize)
 
-        map.forEach { line ->
+        lines.forEach { line ->
             val from = line.first()
             val to = line.last()
             when {
@@ -49,33 +54,23 @@ object Day5 {
         return countMultipleLines(ground)
     }
 
-    private fun countMultipleLines(ground: List<MutableList<Int>>) =
-        ground.flatten().count { it >= 2 }
+    private fun countMultipleLines(ground: Ground) = ground.flatten().count { it >= 2 }
 
-    private fun addVerticals(
-        from: Pair<Int, Int>,
-        to: Pair<Int, Int>,
-        ground: List<MutableList<Int>>) {
-        val sorted = listOf(from.second, to.second).sorted()
-        (sorted.first()..sorted.last()).forEach {
-            ground[it][from.first] += 1
-        }
-    }
-
-    private fun addHorizontals(
-        from: Pair<Int, Int>,
-        to: Pair<Int, Int>,
-        ground: List<MutableList<Int>>) {
+    private fun addHorizontals(from: Coords, to: Coords, ground: Ground) {
         val sorted = listOf(from.first, to.first).sorted()
         (sorted.first()..sorted.last()).forEach {
             ground[from.second][it] += 1
         }
     }
 
-    private fun addDiagonals(
-        from: Pair<Int, Int>,
-        to: Pair<Int, Int>,
-        ground: List<MutableList<Int>>) {
+    private fun addVerticals(from: Coords, to: Coords, ground: Ground) {
+        val sorted = listOf(from.second, to.second).sorted()
+        (sorted.first()..sorted.last()).forEach {
+            ground[it][from.first] += 1
+        }
+    }
+
+    private fun addDiagonals(from: Coords, to: Coords, ground: Ground) {
         val lineRange = (if (from.first < to.first) (from.first..to.first)
         else (from.first downTo to.first)).toList()
 
@@ -87,18 +82,16 @@ object Day5 {
         }
     }
 
-    private fun createGroundAndMap(
-        input: List<String>,
-        mapSize: Int): Pair<List<MutableList<Int>>, List<List<Pair<Int, Int>>>> {
+    private fun createGroundAndLines(input: List<String>, mapSize: Int): Pair<Ground, Lines> {
         val ground = (0..mapSize).map {
             (0..mapSize).map { 0 }.toMutableList()
         }
-        val map = input.map { line ->
+        val lines = input.map { line ->
             line.split(" -> ")
                 .map { it.split(",") }
-                .map { Pair(it.first().toInt(), it.last().toInt()) }
+                .map { Coords(it.first().toInt(), it.last().toInt()) }
         }
-        return Pair(ground, map)
+        return Pair(ground, lines)
     }
 
     private fun paintGround(ground: List<List<Int>>) {
@@ -111,7 +104,7 @@ object Day5 {
     fun main(args: Array<String>) {
         val input = Utils.readLines("day5.txt")
 
-        Utils.printResult("part 1") { part1(input) }
-        Utils.printResult("part 2") { part2(input) }
+        printResult("part 1") { part1(input) }
+        printResult("part 2") { part2(input) }
     }
 }
